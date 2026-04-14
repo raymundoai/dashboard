@@ -1,0 +1,21 @@
+.env
+**/.env
+**/__pycache__/
+**/.pytest_cache/
+**/*.pyc
+**/*.pyo
+**/*.sqlite
+**/*.sqlite-shm
+**/*.sqlite-wal
+*.Zone.Identifier
+*:Zone.Identifier
+
+db/backups/
+frontend/node_modules/
+frontend/dist/
+frontend/*.tsbuildinfo
+backend/db/*.sqlite
+backend/credentials/
+credentials/*
+
+Faturamento E-commerce Brew - 2021-2026.xlsx

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Mockup Funil</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #06080f;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      padding: 36px 40px;
+    }
+    h1 { font-size: 17px; font-weight: 600; color: #f1f5f9; margin-bottom: 4px; }
+    .subtitle { font-size: 13px; color: #475569; margin-bottom: 40px; }
+    .card {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 28px 24px 20px;
+    }
+    .legend {
+      display: flex; gap: 20px; flex-wrap: wrap; margin-top: 18px; padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #64748b; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<h1>Mockup — Funil de Conversão por Canal</h1>
+<p class="subtitle">Dados fictícios · estágios de cima pra baixo · canais na horizontal</p>
+
+<div class="card">
+  <svg id="svg" width="100%" viewBox="0 0 720 480" preserveAspectRatio="xMidYMid meet"></svg>
+  <div class="legend" id="leg"></div>
+</div>
+
+<script>
+const CHANNELS = [
+  { label: 'Orgânico',   color: '#38bdf8', pct: 0.42 },
+  { label: 'Google Ads', color: '#34d399', pct: 0.30 },
+  { label: 'Meta Ads',   color: '#c084fc', pct: 0.20 },
+  { label: 'Direto',     color: '#fb923c', pct: 0.08 },
+];
+
+const STAGES = [
+  { label: 'Visitas',      value: '12.480', pct: 1.00 },
+  { label: 'Sessões Eng.', value: '8.112',  pct: 0.65 },
+  { label: 'Add Cart',     value: '3.494',  pct: 0.28 },
+  { label: 'Compras',      value: '998',    pct: 0.08 },
+];
+
+// Cumulative channel boundaries [0, .42, .72, .92, 1.0]
+const CUM = CHANNELS.reduce((a, ch) => { a.push(a[a.length - 1] + ch.pct); return a; }, [0]);
+
+const W = 720, H = 480;
+const CX = 360;           // horizontal center
+const MAX_HALF_W = 260;   // half-width of widest stage (Visitas)
+const STAGE_Y = [60, 180, 300, 400]; // y position of each stage
+const halfWs = STAGES.map(s => s.pct * MAX_HALF_W);
+
+// x bounds of channel k at stage si
+function chLeft(si, k)  { return CX - halfWs[si] + CUM[k]   * 2 * halfWs[si]; }
+function chRight(si, k) { return CX - halfWs[si] + CUM[k+1] * 2 * halfWs[si]; }
+
+let out = '';
+
+// ── Trapezoids between adjacent stages ─────────────────────────────
+for (let si = 0; si < STAGES.length - 1; si++) {
+  const y1 = STAGE_Y[si], y2 = STAGE_Y[si + 1];
+
+  CHANNELS.forEach((ch, ci) => {
+    const xl1 = chLeft(si, ci),  xr1 = chRight(si, ci);
+    const xl2 = chLeft(si+1, ci), xr2 = chRight(si+1, ci);
+    const pts = `${xl1},${y1} ${xr1},${y1} ${xr2},${y2} ${xl2},${y2}`;
+    out += `<polygon points="${pts}" fill="${ch.color}" opacity="0.80"/>`;
+
+    // thin separator between channels (skip last)
+    if (ci < CHANNELS.length - 1) {
+      out += `<line x1="${xr1}" y1="${y1}" x2="${xr2}" y2="${y2}"
+              stroke="rgba(6,8,15,.6)" stroke-width="1.5"/>`;
+    }
+  });
+
+  // horizontal stage boundary line
+  const xl = chLeft(si+1, 0), xr = chRight(si+1, CHANNELS.length - 1);
+  out += `<line x1="${xl}" y1="${y2}" x2="${xr}" y2="${y2}"
+          stroke="rgba(6,8,15,.7)" stroke-width="2"/>`;
+}
+
+// ── Outer silhouette lines ──────────────────────────────────────────
+const leftPts  = STAGES.map((_, i) => `${chLeft(i, 0)},${STAGE_Y[i]}`).join(' ');
+const rightPts = STAGES.map((_, i) => `${chRight(i, CHANNELS.length-1)},${STAGE_Y[i]}`).join(' ');
+out += `<polyline points="${leftPts}"  fill="none" stroke="rgba(255,255,255,.06)" stroke-width="1"/>`;
+out += `<polyline points="${rightPts}" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="1"/>`;
+
+// ── Stage labels (left) and stats (right) ──────────────────────────
+STAGES.forEach((st, si) => {
+  const y = STAGE_Y[si];
+  const xl = chLeft(si, 0) - 8;
+  const xr = chRight(si, CHANNELS.length - 1) + 10;
+
+  // stage name — left, aligned right to funnel edge
+  out += `<text x="${xl}" y="${y - 6}" text-anchor="end"
+          font-size="12" font-weight="600" fill="#94a3b8">${st.label}</text>`;
+  out += `<text x="${xl}" y="${y + 8}" text-anchor="end"
+          font-size="11" fill="#334155">${st.value}</text>`;
+
+  // percentage — right
+  out += `<text x="${xr}" y="${y - 2}" text-anchor="start"
+          font-size="13" font-weight="700" fill="#f1f5f9">${Math.round(st.pct * 100)}%</text>`;
+
+  // conversion drop between stages
+  if (si < STAGES.length - 1) {
+    const midY = (STAGE_Y[si] + STAGE_Y[si + 1]) / 2;
+    const conv = Math.round((STAGES[si + 1].pct / st.pct) * 100);
+    out += `<text x="${xr}" y="${midY + 4}" text-anchor="start"
+            font-size="11" fill="#1e3a4a">↓ ${conv}%</text>`;
+  }
+});
+
+document.getElementById('svg').innerHTML = out;
+document.getElementById('leg').innerHTML = CHANNELS.map(c =>
+  `<div class="legend-item"><div class="legend-dot" style="background:${c.color}"></div>${c.label}</div>`
+).join('');
+</script>
+</body>
+</html>

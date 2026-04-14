@@ -1,0 +1,13 @@
+pydantic
+python-dotenv
+requests
+httpx
+google-auth
+openpyxl
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+python-jose[cryptography]==3.3.0
+bcrypt==4.2.1
+python-multipart==0.0.20
+pytest==8.3.4
+pytest-asyncio==0.24.0

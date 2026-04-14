@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 224 71% 4%;
+  --foreground: 210 20% 88%;
+  --card: 222 60% 6%;
+  --card-foreground: 210 20% 88%;
+  --border: 215 28% 12%;
+  --input: 215 28% 12%;
+  --ring: 215 28% 20%;
+  --muted: 220 40% 8%;
+  --muted-foreground: 215 16% 44%;
+  --accent: 220 40% 10%;
+  --accent-foreground: 210 20% 88%;
+  --primary: 210 100% 60%;
+  --primary-foreground: 224 71% 4%;
+  --brew: 199 95% 60%;
+  --grow: 158 64% 52%;
+  --bigb: 270 80% 68%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle card glow on hover */
+.card-hover {
+  transition: box-shadow 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+.card-hover:hover {
+  box-shadow: 0 0 0 1px hsl(var(--border) / 0.8), 0 4px 24px hsl(224 71% 2% / 0.6);
+  border-color: hsl(var(--ring));
+  transform: translateY(-1px);
+}
+
+/* Row hover in tables */
+.row-hover {
+  transition: background-color 120ms ease;
+}
+.row-hover:hover {
+  background-color: hsl(var(--accent));
+}
