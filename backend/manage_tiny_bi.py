@@ -18,6 +18,7 @@ from tiny_bi import (
     load_default_ecommerce_targets,
     sync_date_range,
     sync_incremental,
+    SYNC_LOOKBACK_DAYS,
 )
 
 
@@ -94,7 +95,12 @@ def main() -> None:
         choices=["incremental", "range", "backfill"],
         help="Modo de sincronizacao",
     )
-    sync_parser.add_argument("--lookback-days", type=int, default=7, help="Janela para incremental")
+    sync_parser.add_argument(
+        "--lookback-days",
+        type=int,
+        default=SYNC_LOOKBACK_DAYS,
+        help="Janela para incremental",
+    )
     sync_parser.add_argument("--start", type=_parse_date, help="Data inicial para modo range (YYYY-MM-DD)")
     sync_parser.add_argument("--end", type=_parse_date, help="Data final para modo range (YYYY-MM-DD)")
     sync_parser.add_argument(

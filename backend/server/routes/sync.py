@@ -19,7 +19,7 @@ def _utc_now() -> str:
 async def trigger_sync(
     source: str = Query("all"),
     mode: str = Query("incremental"),
-    lookback_days: int = Query(7),
+    lookback_days: int = Query(tiny_bi.SYNC_LOOKBACK_DAYS),
     _: str = Depends(require_auth),
 ):
     job_id = str(uuid.uuid4())

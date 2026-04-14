@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useEffect, useRef } from 'react'
+import { lazy, Suspense, useEffect, useState, useRef } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Shell from '@/components/layout/Shell'
@@ -17,6 +17,7 @@ interface MeResponse {
 }
 
 export type SyncState = 'idle' | 'running' | 'done' | 'error'
+const MANUAL_SYNC_LOOKBACK_DAYS = 60
 
 function useSyncManager() {
   const queryClient = useQueryClient()
@@ -36,7 +37,7 @@ function useSyncManager() {
     setSyncError(null)
     try {
       const { job_id } = await api.post<{ job_id: string }>(
-        '/sync?source=all&mode=incremental&lookback_days=7'
+        `/sync?source=all&mode=incremental&lookback_days=${MANUAL_SYNC_LOOKBACK_DAYS}`
       )
       pollRef.current = setInterval(async () => {
         try {
@@ -87,11 +88,6 @@ export default function App() {
   })
 
   const { syncState, syncError, triggerSync } = useSyncManager()
-
-  // Auto-sync on load once authenticated
-  useEffect(() => {
-    if (me) triggerSync()
-  }, [!!me])
 
   function handleStoreChange(nextStore: StoreKey) {
     setStore(nextStore)
