@@ -4,7 +4,6 @@
 **/*.pyo
 **/node_modules
 frontend/dist
-backend/db
 **/*.sqlite
 **/*.sqlite-wal
 **/*.sqlite-shm
