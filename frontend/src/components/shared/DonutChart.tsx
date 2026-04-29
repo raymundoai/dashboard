@@ -9,8 +9,8 @@ export default function DonutChart({ data, title, height = 240, colors }: Props)
   const palette = colors ?? COLORS
   const chartData = data.map((d) => ({ name: d.label, value: d.orders }))
   if (chartData.length === 0) return (
-    <div className="bg-card/40 border border-border/50 rounded-xl p-4">
-      <p className="text-sm font-semibold text-foreground mb-1 pb-2 border-b border-border/40">{title}</p>
+    <div className="bg-card/40 border border-border/65 rounded-xl p-4">
+      <p className="text-sm font-semibold text-foreground mb-1 pb-2 border-b border-border/55">{title}</p>
       <div style={{ height }} className="flex items-center justify-center">
         <p className="text-xs text-muted-foreground">Sem dados</p>
       </div>
@@ -18,8 +18,8 @@ export default function DonutChart({ data, title, height = 240, colors }: Props)
   )
 
   return (
-    <div className="bg-card/40 border border-border/50 rounded-xl p-4">
-      <p className="text-sm font-semibold text-foreground mb-1 pb-2 border-b border-border/40">{title}</p>
+    <div className="bg-card/40 border border-border/65 rounded-xl p-4">
+      <p className="text-sm font-semibold text-foreground mb-1 pb-2 border-b border-border/55">{title}</p>
       <ResponsiveContainer width="100%" height={height}>
         <PieChart>
           <Pie

@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Shell from '@/components/layout/Shell'
 import GlobalHeader from '@/components/layout/GlobalHeader'
 import Login from '@/pages/Login'
-import type { StoreKey, ViewMode } from '@/lib/types'
+import type { StoreKey, ThemeMode, ViewMode } from '@/lib/types'
 import { api } from '@/lib/api'
 import { coerceYearForStore } from '@/lib/yearRange'
 
@@ -18,6 +18,13 @@ interface MeResponse {
 
 export type SyncState = 'idle' | 'running' | 'done' | 'error'
 const MANUAL_SYNC_LOOKBACK_DAYS = 60
+const THEME_STORAGE_KEY = 'dashboard-theme'
+
+function getInitialTheme(): ThemeMode {
+  if (typeof window === 'undefined') return 'dark'
+  const stored = window.localStorage.getItem(THEME_STORAGE_KEY)
+  return stored === 'light' || stored === 'dark' ? stored : 'dark'
+}
 
 function useSyncManager() {
   const queryClient = useQueryClient()
@@ -79,6 +86,13 @@ export default function App() {
   const [year, setYear] = useState(currentYear)
   const [month, setMonth] = useState(now.getMonth() + 1)
   const [viewMode, setViewMode] = useState<ViewMode>('mensal')
+  const [theme, setTheme] = useState<ThemeMode>(getInitialTheme)
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    document.documentElement.classList.toggle('dark', theme === 'dark')
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme)
+  }, [theme])
 
   const { data: me, isLoading, isError, error } = useQuery<MeResponse>({
     queryKey: ['auth-me'],
@@ -99,7 +113,7 @@ export default function App() {
   // Only redirect to login on 401. Other errors show a generic message.
   if (isError) {
     const is401 = (error as Error)?.message === 'Unauthenticated'
-    if (is401) return <Login />
+    if (is401) return <Login theme={theme} onThemeChange={setTheme} />
     return (
       <div className="min-h-screen flex items-center justify-center text-sm text-muted-foreground">
         Erro ao carregar. Recarregue a página.
@@ -107,15 +121,17 @@ export default function App() {
     )
   }
 
-  if (!me) return <Login />
+  if (!me) return <Login theme={theme} onThemeChange={setTheme} />
 
   return (
     <Shell>
       <GlobalHeader
         store={store} year={year} month={month} viewMode={viewMode} role={me.role}
+        theme={theme}
         syncState={syncState} syncError={syncError} onSyncClick={triggerSync}
         onStoreChange={handleStoreChange} onYearChange={setYear}
         onMonthChange={setMonth} onViewModeChange={setViewMode}
+        onThemeChange={setTheme}
       />
       <Suspense fallback={<RouteSkeleton />}>
         <Routes>
@@ -135,15 +151,15 @@ export default function App() {
 function RouteSkeleton() {
   return (
     <main className="mx-auto max-w-7xl space-y-6 px-6 py-8">
-      <div className="h-16 animate-pulse rounded-2xl border border-border/50 bg-card/50" />
+      <div className="h-16 animate-pulse rounded-2xl border border-border/65 bg-card/50" />
       <div className="grid gap-4 lg:grid-cols-2">
-        <div className="h-64 animate-pulse rounded-2xl border border-border/50 bg-card/40" />
-        <div className="h-64 animate-pulse rounded-2xl border border-border/50 bg-card/40" />
+        <div className="h-64 animate-pulse rounded-2xl border border-border/65 bg-card/40" />
+        <div className="h-64 animate-pulse rounded-2xl border border-border/65 bg-card/40" />
       </div>
       <div className="grid gap-4 xl:grid-cols-3">
-        <div className="h-56 animate-pulse rounded-2xl border border-border/50 bg-card/40" />
-        <div className="h-56 animate-pulse rounded-2xl border border-border/50 bg-card/40" />
-        <div className="h-56 animate-pulse rounded-2xl border border-border/50 bg-card/40" />
+        <div className="h-56 animate-pulse rounded-2xl border border-border/65 bg-card/40" />
+        <div className="h-56 animate-pulse rounded-2xl border border-border/65 bg-card/40" />
+        <div className="h-56 animate-pulse rounded-2xl border border-border/65 bg-card/40" />
       </div>
     </main>
   )

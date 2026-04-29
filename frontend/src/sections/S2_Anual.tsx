@@ -28,7 +28,7 @@ function useAggregated(sources: string[], year: number) {
 
 function CardHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
-    <div className="text-center mb-3 pb-2 border-b border-border/40">
+    <div className="text-center mb-3 pb-2 border-b border-border/55">
       <p className="text-lg font-bold text-foreground">{title}</p>
       <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>
     </div>
@@ -53,11 +53,11 @@ export default function S2_Anual({ store, year }: Props) {
     const subtitle   = STORE_LABELS[store] ?? store
     return (
       <section className="grid grid-cols-2 gap-6">
-        <div className="bg-card/40 border border-border/50 rounded-xl p-4">
+        <div className="bg-card/40 border border-border/65 rounded-xl p-4">
           <CardHeader title="Ticket Médio" subtitle={subtitle} />
           {brewData.isLoading ? <Skeleton className="h-40" /> : <BarChartSimple data={ticketBrew} color={color} height={160} />}
         </div>
-        <div className="bg-card/40 border border-border/50 rounded-xl p-4">
+        <div className="bg-card/40 border border-border/65 rounded-xl p-4">
           <CardHeader title="Pedidos" subtitle={subtitle} />
           {brewData.isLoading ? <Skeleton className="h-40" /> : <BarChartSimple data={ordersBrew} color={colorLight} height={160} />}
         </div>
@@ -68,21 +68,21 @@ export default function S2_Anual({ store, year }: Props) {
   return (
     <section className="grid grid-cols-2 gap-6">
       <div className="space-y-4">
-        <div className="bg-card/40 border border-border/50 rounded-xl p-4">
+        <div className="bg-card/40 border border-border/65 rounded-xl p-4">
           <CardHeader title="Ticket Médio" subtitle="Brew · todas as lojas" />
           {brewData.isLoading ? <Skeleton className="h-40" /> : <BarChartSimple data={ticketBrew} color="#38bdf8" height={160} />}
         </div>
-        <div className="bg-card/40 border border-border/50 rounded-xl p-4">
+        <div className="bg-card/40 border border-border/65 rounded-xl p-4">
           <CardHeader title="Pedidos" subtitle="Brew · todas as lojas" />
           {brewData.isLoading ? <Skeleton className="h-40" /> : <BarChartSimple data={ordersBrew} color="#7dd3fc" height={160} />}
         </div>
       </div>
       <div className="space-y-4">
-        <div className="bg-card/40 border border-border/50 rounded-xl p-4">
+        <div className="bg-card/40 border border-border/65 rounded-xl p-4">
           <CardHeader title="Ticket Médio" subtitle="Grow · todas as lojas" />
           {growData.isLoading ? <Skeleton className="h-40" /> : <BarChartSimple data={ticketGrow} color="#34d399" height={160} />}
         </div>
-        <div className="bg-card/40 border border-border/50 rounded-xl p-4">
+        <div className="bg-card/40 border border-border/65 rounded-xl p-4">
           <CardHeader title="Pedidos" subtitle="Grow · todas as lojas" />
           {growData.isLoading ? <Skeleton className="h-40" /> : <BarChartSimple data={ordersGrow} color="#6ee7b7" height={160} />}
         </div>

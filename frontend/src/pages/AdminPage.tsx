@@ -218,7 +218,7 @@ function SummaryCard({
   tone?: 'default' | 'warn'
 }) {
   return (
-    <Card className={cn('border-border/60 bg-card/70', tone === 'warn' && 'border-amber-500/25 bg-amber-500/6')}>
+    <Card className={cn('border-border/75 bg-card/70', tone === 'warn' && 'border-amber-500/25 bg-amber-500/6')}>
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between gap-3">
           <div>
@@ -226,7 +226,7 @@ function SummaryCard({
             <CardTitle className="mt-1 text-2xl font-semibold">{value}</CardTitle>
           </div>
           <div className={cn(
-            'flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/80',
+            'flex h-10 w-10 items-center justify-center rounded-full border border-border/75 bg-background/80',
             tone === 'warn' && 'border-amber-500/20 bg-amber-500/10 text-amber-300',
           )}>
             <Icon className="h-4 w-4" />
@@ -262,8 +262,8 @@ function BrandSection({
   )
 
   return (
-    <Card className={cn('border-border/60 bg-card/70', brandMeta.border)}>
-      <CardHeader className={cn('border-b border-border/50 pb-4', brandMeta.surface)}>
+    <Card className={cn('border-border/75 bg-card/70', brandMeta.border)}>
+      <CardHeader className={cn('border-b border-border/65 pb-4', brandMeta.surface)}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
@@ -278,11 +278,11 @@ function BrandSection({
           </div>
 
           <div className="grid min-w-[220px] gap-2 text-sm">
-            <div className="flex items-center justify-between gap-4 rounded-lg border border-border/50 bg-background/50 px-3 py-2">
+            <div className="flex items-center justify-between gap-4 rounded-lg border border-border/65 bg-background/50 px-3 py-2">
               <span className="text-muted-foreground">Meta total</span>
               <span className="font-medium text-foreground">{formatBRL(physicalTargetTotal + ecommerceTargetTotal)}</span>
             </div>
-            <div className="flex items-center justify-between gap-4 rounded-lg border border-border/50 bg-background/50 px-3 py-2">
+            <div className="flex items-center justify-between gap-4 rounded-lg border border-border/65 bg-background/50 px-3 py-2">
               <span className="text-muted-foreground">Mídia planejada</span>
               <span className="font-medium text-foreground">{formatBRL(mediaTotal)}</span>
             </div>
@@ -523,8 +523,8 @@ export default function AdminPage() {
         <Badge variant={periodState.variant}>{periodState.label}</Badge>
       </div>
 
-      <Card className="border-border/60 bg-card/75">
-        <CardHeader className="border-b border-border/50 pb-4">
+      <Card className="border-border/75 bg-card/75">
+        <CardHeader className="border-b border-border/65 pb-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
@@ -583,19 +583,19 @@ export default function AdminPage() {
         </CardHeader>
 
         <CardContent className="grid gap-3 pt-4 md:grid-cols-3">
-          <div className="rounded-xl border border-border/50 bg-background/60 p-4">
+          <div className="rounded-xl border border-border/65 bg-background/60 p-4">
             <p className="text-sm font-medium text-foreground">Como usar</p>
             <p className="mt-1 text-sm text-muted-foreground">
               Preencha o faturamento esperado de cada loja. Nos sites, informe também a verba de mídia do mês.
             </p>
           </div>
-          <div className="rounded-xl border border-border/50 bg-background/60 p-4">
+          <div className="rounded-xl border border-border/65 bg-background/60 p-4">
             <p className="text-sm font-medium text-foreground">Lojas físicas</p>
             <p className="mt-1 text-sm text-muted-foreground">
               Trabalham apenas com campo de meta mensal. Não exigem orçamento de mídia.
             </p>
           </div>
-          <div className="rounded-xl border border-border/50 bg-background/60 p-4">
+          <div className="rounded-xl border border-border/65 bg-background/60 p-4">
             <p className="text-sm font-medium text-foreground">E-commerce</p>
             <p className="mt-1 text-sm text-muted-foreground">
               Planeje meta mensal, Google Ads e Meta Ads para deixar o mês pronto antes da execução.
@@ -649,7 +649,7 @@ export default function AdminPage() {
         <BrandSection brand="grow" draft={draft} isLoading={isLoading && !data} onFieldChange={setField} />
       </section>
 
-      <Card className="border-border/60 bg-card/75">
+      <Card className="border-border/75 bg-card/75">
         <CardFooter className="flex flex-col items-stretch justify-between gap-4 sm:flex-row sm:items-center">
           <div className="space-y-1">
             <p className="text-sm font-medium text-foreground">Salvar planejamento do mês</p>

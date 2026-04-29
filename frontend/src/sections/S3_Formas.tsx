@@ -44,7 +44,7 @@ type MixRow = { label: string; orders: number; revenue: number; sharePct: number
 function MixTable({ rows, showRevenue = true }: { rows: MixRow[]; showRevenue?: boolean }) {
   if (!rows.length) return null
   return (
-    <table className="w-full text-xs mt-3 border-t border-border/30 pt-2">
+    <table className="w-full text-xs mt-3 border-t border-border/45 pt-2">
       <thead>
         <tr className="text-muted-foreground">
           <th className="text-left py-1 font-medium">Forma</th>
@@ -55,7 +55,7 @@ function MixTable({ rows, showRevenue = true }: { rows: MixRow[]; showRevenue?: 
       </thead>
       <tbody>
         {rows.map(r => (
-          <tr key={r.label} className="border-b border-border/20">
+          <tr key={r.label} className="border-b border-border/35">
             <td className="py-1">{r.label}</td>
             <td className="py-1 text-right text-muted-foreground">{r.orders}</td>
             <td className="py-1 text-right text-muted-foreground">{(r.sharePct * 100).toFixed(1)}%</td>
@@ -74,8 +74,8 @@ function BrandMixCard({ label, sources, type }: {
   const accent = label === 'Brew' ? '#38bdf8' : '#34d399'
   const title = `${label} — Formas de ${type === 'payment' ? 'Pagamento' : 'Frete'}`
   return (
-    <div className="bg-card/40 border border-border/50 rounded-xl p-5">
-      <h3 className="text-base font-bold text-foreground mb-3 pb-2 border-b border-border/40 flex items-center gap-2">
+    <div className="bg-card/40 border border-border/65 rounded-xl p-5">
+      <h3 className="text-base font-bold text-foreground mb-3 pb-2 border-b border-border/55 flex items-center gap-2">
         <span className="w-1 h-5 rounded-full shrink-0" style={{ background: accent }} />
         {title}
       </h3>
@@ -116,8 +116,8 @@ function SingleStoreFormas({ store }: { store: string }) {
 
   return (
     <section className="grid grid-cols-2 gap-6">
-      <div className="bg-card/40 border border-border/50 rounded-xl p-5">
-        <h3 className="text-sm font-semibold text-foreground mb-3 pb-2 border-b border-border/40">
+      <div className="bg-card/40 border border-border/65 rounded-xl p-5">
+        <h3 className="text-sm font-semibold text-foreground mb-3 pb-2 border-b border-border/55">
           Formas de Pagamento
         </h3>
         {payment.isLoading ? <Skeleton className="h-56" /> : payment.isError ? (
@@ -129,8 +129,8 @@ function SingleStoreFormas({ store }: { store: string }) {
           </>
         )}
       </div>
-      <div className="bg-card/40 border border-border/50 rounded-xl p-5">
-        <h3 className="text-sm font-semibold text-foreground mb-3 pb-2 border-b border-border/40">
+      <div className="bg-card/40 border border-border/65 rounded-xl p-5">
+        <h3 className="text-sm font-semibold text-foreground mb-3 pb-2 border-b border-border/55">
           Formas de Frete
         </h3>
         {shipping.isLoading ? <Skeleton className="h-56" /> : shipping.isError ? (

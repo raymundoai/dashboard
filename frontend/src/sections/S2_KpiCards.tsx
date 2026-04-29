@@ -44,7 +44,7 @@ function KpiRow({ label, sources, year, month }: { label: string; sources: strin
 
   if (query.isLoading) return <Skeleton className="h-28" />
   if (query.isError) return (
-    <div className="h-28 rounded-xl border border-border/50 bg-card/40 flex items-center justify-center text-xs text-muted-foreground">
+    <div className="h-28 rounded-xl border border-border/65 bg-card/40 flex items-center justify-center text-xs text-muted-foreground">
       Erro ao carregar dados
     </div>
   )
@@ -55,19 +55,19 @@ function KpiRow({ label, sources, year, month }: { label: string; sources: strin
     <div>
       {label && <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">{label}</p>}
       <div className="grid grid-cols-3 gap-4">
-        <div className="bg-card/40 border border-border/50 rounded-xl p-4">
+        <div className="bg-card/40 border border-border/65 rounded-xl p-4">
           <p className="text-xs text-muted-foreground mb-1">Ticket Médio</p>
           <p className="text-xl font-bold">{d.ticket != null ? formatBRL(d.ticket) : '—'}</p>
           <Delta value={d.ticket_delta_pct} />
           <span className="text-xs text-muted-foreground ml-1">{vsLabel}</span>
         </div>
-        <div className="bg-card/40 border border-border/50 rounded-xl p-4">
+        <div className="bg-card/40 border border-border/65 rounded-xl p-4">
           <p className="text-xs text-muted-foreground mb-1">Pedidos</p>
           <p className="text-xl font-bold">{d.orders ?? '—'}</p>
           <Delta value={d.orders_delta_abs} unit="" />
           <span className="text-xs text-muted-foreground ml-1">{vsLabel}</span>
         </div>
-        <div className="bg-card/40 border border-border/50 rounded-xl p-4">
+        <div className="bg-card/40 border border-border/65 rounded-xl p-4">
           <p className="text-xs text-muted-foreground mb-1">Faturamento</p>
           <p className="text-xl font-bold">{d.revenue != null ? formatBRL(d.revenue) : '—'}</p>
           {d.gap_to_target != null && (

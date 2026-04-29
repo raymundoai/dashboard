@@ -25,8 +25,8 @@ export default function S1_LojaEspecifica({ store, year, month }: Props) {
   return (
     <section className="space-y-6">
       <S2_KpiCards source={store} year={year} month={month} />
-      <div className="bg-card/40 border border-border/50 rounded-xl p-5">
-        <h3 className="text-sm font-semibold text-foreground mb-3 pb-2 border-b border-border/40">
+      <div className="bg-card/40 border border-border/65 rounded-xl p-5">
+        <h3 className="text-sm font-semibold text-foreground mb-3 pb-2 border-b border-border/55">
           Faturamento Semanal — {MONTHS_PT[month - 1]} {year}
         </h3>
         {isLoading ? <Skeleton className="h-48" /> : (

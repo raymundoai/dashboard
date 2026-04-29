@@ -30,27 +30,27 @@ export default function AlertBar() {
         {missingSemLoja > 0 && (
           <button
             onClick={() => setOpenMissing(true)}
-            className="flex-1 flex items-center gap-3 rounded-xl px-4 py-3 bg-red-500/5 border border-red-500/15 transition-all hover:bg-red-500/10 hover:border-red-500/25 cursor-pointer text-left"
+            className="flex-1 flex items-center gap-3 rounded-xl px-4 py-3 bg-red-100/80 border border-red-700/35 transition-all hover:bg-red-100 hover:border-red-700/55 cursor-pointer text-left dark:bg-red-500/5 dark:border-red-500/15 dark:hover:bg-red-500/10 dark:hover:border-red-500/25"
           >
-            <AlertTriangle className="h-4 w-4 text-red-400/80 shrink-0" />
-            <span className="text-sm text-red-300/80">
-              <strong className="font-semibold text-red-300">{missingSemLoja}</strong>{' '}
+            <AlertTriangle className="h-4 w-4 text-red-700 shrink-0 dark:text-red-400/80" />
+            <span className="text-sm text-red-800 dark:text-red-300/80">
+              <strong className="font-semibold text-red-900 dark:text-red-300">{missingSemLoja}</strong>{' '}
               pedido{missingSemLoja !== 1 ? 's' : ''} sem loja atribuída
             </span>
-            <span className="ml-auto text-xs text-red-400/50">ver →</span>
+            <span className="ml-auto text-xs font-medium text-red-700/75 dark:text-red-400/50">ver →</span>
           </button>
         )}
         {pedidosEmAberto > 0 && (
           <button
             onClick={() => setOpenOpen(true)}
-            className="flex-1 flex items-center gap-3 rounded-xl px-4 py-3 bg-amber-500/5 border border-amber-500/15 transition-all hover:bg-amber-500/10 hover:border-amber-500/25 cursor-pointer text-left"
+            className="flex-1 flex items-center gap-3 rounded-xl px-4 py-3 bg-amber-100/90 border border-amber-700/40 transition-all hover:bg-amber-100 hover:border-amber-700/60 cursor-pointer text-left dark:bg-amber-500/5 dark:border-amber-500/15 dark:hover:bg-amber-500/10 dark:hover:border-amber-500/25"
           >
-            <AlertTriangle className="h-4 w-4 text-amber-400/80 shrink-0" />
-            <span className="text-sm text-amber-300/80">
-              <strong className="font-semibold text-amber-300">{pedidosEmAberto}</strong>{' '}
+            <AlertTriangle className="h-4 w-4 text-amber-700 shrink-0 dark:text-amber-400/80" />
+            <span className="text-sm text-amber-900 dark:text-amber-300/80">
+              <strong className="font-semibold text-amber-950 dark:text-amber-300">{pedidosEmAberto}</strong>{' '}
               pedido{pedidosEmAberto !== 1 ? 's' : ''} em aberto há mais de 1 dia
             </span>
-            <span className="ml-auto text-xs text-amber-400/50">ver →</span>
+            <span className="ml-auto text-xs font-medium text-amber-700/80 dark:text-amber-400/50">ver →</span>
           </button>
         )}
       </div>
@@ -63,14 +63,14 @@ export default function AlertBar() {
               onClose={() => setOpenMissing(false)}
               title="Pedidos sem loja atribuída"
               orders={missingOrders}
-              accentClass="text-red-400"
+              accentClass="text-red-800 dark:text-red-400"
             />
             <AlertOrdersDialog
               open={openOpen}
               onClose={() => setOpenOpen(false)}
               title="Pedidos em aberto há mais de 1 dia"
               orders={openOrders}
-              accentClass="text-amber-400"
+              accentClass="text-amber-800 dark:text-amber-400"
             />
           </>
         )}

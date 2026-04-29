@@ -32,8 +32,8 @@ function AnnualBar({ sources, title, subtitle, year, color, yDomain }: AnnualBar
     meta: results[0]?.data?.years.find(y => y.year === year)?.meta[i] ?? null,
   }))
   return (
-    <div className="bg-card/40 border border-border/50 rounded-xl p-4">
-      <div className="text-center mb-3 pb-2 border-b border-border/40">
+    <div className="bg-card/40 border border-border/65 rounded-xl p-4">
+      <div className="text-center mb-3 pb-2 border-b border-border/55">
         <p className="text-lg font-bold text-foreground">{title}</p>
         <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>
       </div>

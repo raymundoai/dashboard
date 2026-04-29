@@ -89,7 +89,7 @@ function CustomerList({ source, year, month, viewMode }: {
 
 function MetricToggle({ value, onChange }: { value: ProductMetric; onChange: (v: ProductMetric) => void }) {
   return (
-    <div className="flex gap-1 bg-background border border-border/60 rounded-lg p-0.5">
+    <div className="flex gap-1 bg-background border border-border/75 rounded-lg p-0.5">
       <button
         onClick={() => onChange('revenue')}
         className={`text-xs px-2.5 py-1 rounded-md transition-colors ${
@@ -117,8 +117,8 @@ function BrandProductCard({ label, source, metric, onMetricChange, year, month, 
 } & PeriodProps) {
   const accent = label === 'Brew' ? '#38bdf8' : '#34d399'
   return (
-    <div className="bg-card/40 border border-border/50 rounded-xl p-5">
-      <div className="flex items-center justify-between mb-3 pb-2 border-b border-border/40">
+    <div className="bg-card/40 border border-border/65 rounded-xl p-5">
+      <div className="flex items-center justify-between mb-3 pb-2 border-b border-border/55">
         <h3 className="text-base font-bold text-foreground flex items-center gap-2">
           <span className="w-1 h-5 rounded-full shrink-0" style={{ background: accent }} />
           {label} — Top 15 Produtos
@@ -135,8 +135,8 @@ function BrandCustomerCard({ label, source, year, month, viewMode }: {
 } & PeriodProps) {
   const accent = label === 'Brew' ? '#38bdf8' : '#34d399'
   return (
-    <div className="bg-card/40 border border-border/50 rounded-xl p-5">
-      <h3 className="text-base font-bold text-foreground mb-3 pb-2 border-b border-border/40 flex items-center gap-2">
+    <div className="bg-card/40 border border-border/65 rounded-xl p-5">
+      <h3 className="text-base font-bold text-foreground mb-3 pb-2 border-b border-border/55 flex items-center gap-2">
         <span className="w-1 h-5 rounded-full shrink-0" style={{ background: accent }} />
         {label} — Top 15 Clientes
       </h3>
@@ -176,15 +176,15 @@ function SingleStoreTopLists({ store, year, month, viewMode }: { store: string }
   const [metric, setMetric] = useState<ProductMetric>('revenue')
   return (
     <section className="grid grid-cols-2 gap-6">
-      <div className="bg-card/40 border border-border/50 rounded-xl p-5">
-        <div className="flex items-center justify-between mb-3 pb-2 border-b border-border/40">
+      <div className="bg-card/40 border border-border/65 rounded-xl p-5">
+        <div className="flex items-center justify-between mb-3 pb-2 border-b border-border/55">
           <h3 className="text-sm font-semibold text-foreground">Top 15 Produtos</h3>
           <MetricToggle value={metric} onChange={setMetric} />
         </div>
         <ProductList source={store} metric={metric} year={year} month={month} viewMode={viewMode} />
       </div>
-      <div className="bg-card/40 border border-border/50 rounded-xl p-5">
-        <h3 className="text-sm font-semibold text-foreground mb-3 pb-2 border-b border-border/40">
+      <div className="bg-card/40 border border-border/65 rounded-xl p-5">
+        <h3 className="text-sm font-semibold text-foreground mb-3 pb-2 border-b border-border/55">
           Top 15 Clientes
         </h3>
         <CustomerList source={store} year={year} month={month} viewMode={viewMode} />

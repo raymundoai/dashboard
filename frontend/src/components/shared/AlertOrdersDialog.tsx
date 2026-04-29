@@ -29,8 +29,8 @@ export default function AlertOrdersDialog({
 }) {
   return (
     <Dialog open={open} onOpenChange={value => !value && onClose()}>
-      <DialogContent className="max-w-2xl border-border/60 bg-card shadow-card-hover sm:max-w-2xl">
-        <DialogHeader className="border-b border-border/50 pb-2">
+      <DialogContent className="max-w-2xl border-border/75 bg-card shadow-card-hover sm:max-w-2xl">
+        <DialogHeader className="border-b border-border/65 pb-2">
           <DialogTitle className={`flex items-center gap-2 text-sm font-semibold ${accentClass}`}>
             <AlertTriangle className="h-4 w-4" />
             {title}
@@ -46,7 +46,7 @@ export default function AlertOrdersDialog({
           ) : (
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border/40">
+                <tr className="border-b border-border/55">
                   <th className="pb-2 pt-1 text-left text-xs font-medium text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Hash className="h-3 w-3" />
@@ -69,7 +69,7 @@ export default function AlertOrdersDialog({
               </thead>
               <tbody>
                 {orders.map((order, index) => (
-                  <tr key={index} className="row-hover border-b border-border/30 last:border-0">
+                  <tr key={index} className="row-hover border-b border-border/45 last:border-0">
                     <td className="py-2.5 pr-4 font-mono text-xs text-foreground">{order.orderNumber || '—'}</td>
                     <td className="max-w-[180px] truncate py-2.5 pr-4 text-muted-foreground">{order.customerName || '—'}</td>
                     <td className="py-2.5 text-right tabular-nums text-muted-foreground">{formatDate(order.orderDate)}</td>

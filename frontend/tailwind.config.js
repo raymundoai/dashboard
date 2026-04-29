@@ -15,6 +15,17 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: "hsl(var(--destructive))",
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -26,8 +37,8 @@ export default {
       },
       transitionDuration: { DEFAULT: "150ms" },
       boxShadow: {
-        card: "0 1px 3px hsl(224 71% 2% / 0.4), 0 0 0 1px hsl(var(--border))",
-        "card-hover": "0 4px 20px hsl(224 71% 2% / 0.6), 0 0 0 1px hsl(var(--ring))",
+        card: "0 1px 3px hsl(var(--foreground) / 0.12), 0 0 0 1px hsl(var(--border) / 0.8)",
+        "card-hover": "0 4px 20px hsl(var(--foreground) / 0.16), 0 0 0 1px hsl(var(--ring))",
       },
     },
   },

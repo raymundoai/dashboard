@@ -7,18 +7,45 @@
   --foreground: 210 20% 88%;
   --card: 222 60% 6%;
   --card-foreground: 210 20% 88%;
-  --border: 215 28% 12%;
-  --input: 215 28% 12%;
-  --ring: 215 28% 20%;
-  --muted: 220 40% 8%;
-  --muted-foreground: 215 16% 44%;
-  --accent: 220 40% 10%;
+  --border: 215 24% 24%;
+  --input: 215 24% 24%;
+  --ring: 210 32% 42%;
+  --muted: 220 36% 10%;
+  --muted-foreground: 215 18% 64%;
+  --accent: 220 34% 13%;
   --accent-foreground: 210 20% 88%;
   --primary: 210 100% 60%;
   --primary-foreground: 224 71% 4%;
+  --secondary: 220 34% 13%;
+  --secondary-foreground: 210 20% 88%;
+  --destructive: 0 84% 60%;
   --brew: 199 95% 60%;
   --grow: 158 64% 52%;
   --bigb: 270 80% 68%;
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  --background: 210 33% 97%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --border: 214 28% 76%;
+  --input: 214 28% 76%;
+  --ring: 207 82% 45%;
+  --muted: 210 32% 92%;
+  --muted-foreground: 215 18% 38%;
+  --accent: 210 34% 88%;
+  --accent-foreground: 222 47% 11%;
+  --primary: 207 82% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 34% 88%;
+  --secondary-foreground: 222 47% 11%;
+  --destructive: 0 72% 44%;
+  --brew: 199 89% 40%;
+  --grow: 158 64% 34%;
+  --bigb: 270 65% 48%;
+  color-scheme: light;
 }
 
 * {
@@ -30,6 +57,7 @@ body {
   color: hsl(var(--foreground));
   font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 180ms ease, color 180ms ease;
 }
 
 /* Subtle card glow on hover */
@@ -37,9 +65,13 @@ body {
   transition: box-shadow 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
 .card-hover:hover {
-  box-shadow: 0 0 0 1px hsl(var(--border) / 0.8), 0 4px 24px hsl(224 71% 2% / 0.6);
+  box-shadow: 0 0 0 1px hsl(var(--border) / 0.9), 0 4px 24px hsl(224 71% 2% / 0.6);
   border-color: hsl(var(--ring));
   transform: translateY(-1px);
+}
+
+html[data-theme="light"] .card-hover:hover {
+  box-shadow: 0 0 0 1px hsl(var(--border) / 0.95), 0 8px 24px hsl(215 28% 40% / 0.14);
 }
 
 /* Row hover in tables */

@@ -3,9 +3,16 @@ import { useQueryClient } from '@tanstack/react-query'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import ThemeToggle from '@/components/shared/ThemeToggle'
 import { api } from '@/lib/api'
+import type { ThemeMode } from '@/lib/types'
 
-export default function Login() {
+interface Props {
+  theme: ThemeMode
+  onThemeChange: (theme: ThemeMode) => void
+}
+
+export default function Login({ theme, onThemeChange }: Props) {
   const queryClient = useQueryClient()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -43,17 +50,17 @@ export default function Login() {
           </h1>
           <p className="text-sm text-muted-foreground mt-1">Dashboard interno</p>
         </div>
-        <div className="bg-card border border-border/60 rounded-2xl p-8">
+        <div className="bg-card border border-border/80 rounded-2xl p-8 shadow-card">
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Usuário</Label>
               <Input name="username" autoComplete="username" required
-                className="bg-muted/50 border-border/60 focus:border-ring transition-colors h-10" />
+                className="bg-muted/50 border-border/80 focus:border-ring transition-colors h-10" />
             </div>
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-muted-foreground">Senha</Label>
               <Input name="password" type="password" autoComplete="current-password" required
-                className="bg-muted/50 border-border/60 focus:border-ring transition-colors h-10" />
+                className="bg-muted/50 border-border/80 focus:border-ring transition-colors h-10" />
             </div>
             {error && (
               <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2">
@@ -64,6 +71,9 @@ export default function Login() {
               className="mt-1 h-10 bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 border border-sky-500/20 hover:border-sky-500/40 transition-all font-medium">
               {loading ? 'Entrando…' : 'Entrar'}
             </Button>
+            <div className="flex justify-center border-t border-border/55 pt-5">
+              <ThemeToggle theme={theme} onThemeChange={onThemeChange} />
+            </div>
           </form>
         </div>
       </div>

@@ -44,6 +44,7 @@ export interface ManagementResponse {
 // New types for Dash_Final
 export type StoreKey = 'all' | 'brewnh' | 'brewpoa' | 'brew' | 'bigb' | 'grow_fisica' | 'grow'
 export type ViewMode = 'mensal' | 'anual'
+export type ThemeMode = 'dark' | 'light'
 
 export interface StoreOption {
   key: StoreKey

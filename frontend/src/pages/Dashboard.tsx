@@ -139,14 +139,14 @@ function DeferredSection({ children, fallback }: { children: ReactNode; fallback
 }
 
 function BannerSkeleton() {
-  return <div className="h-16 animate-pulse rounded-2xl border border-border/50 bg-card/50" />
+  return <div className="h-16 animate-pulse rounded-2xl border border-border/65 bg-card/50" />
 }
 
 function HeroSkeleton() {
   return (
     <section className="grid gap-4 lg:grid-cols-2">
-      <div className="h-72 animate-pulse rounded-2xl border border-border/50 bg-card/40" />
-      <div className="h-72 animate-pulse rounded-2xl border border-border/50 bg-card/40" />
+      <div className="h-72 animate-pulse rounded-2xl border border-border/65 bg-card/40" />
+      <div className="h-72 animate-pulse rounded-2xl border border-border/65 bg-card/40" />
     </section>
   )
 }
@@ -155,7 +155,7 @@ function CardsSkeleton() {
   return (
     <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
       {Array.from({ length: 4 }, (_, index) => (
-        <div key={index} className="h-36 animate-pulse rounded-2xl border border-border/50 bg-card/40" />
+        <div key={index} className="h-36 animate-pulse rounded-2xl border border-border/65 bg-card/40" />
       ))}
     </section>
   )
@@ -164,8 +164,8 @@ function CardsSkeleton() {
 function ChartGridSkeleton() {
   return (
     <section className="grid gap-4 xl:grid-cols-2">
-      <div className="h-80 animate-pulse rounded-2xl border border-border/50 bg-card/40" />
-      <div className="h-80 animate-pulse rounded-2xl border border-border/50 bg-card/40" />
+      <div className="h-80 animate-pulse rounded-2xl border border-border/65 bg-card/40" />
+      <div className="h-80 animate-pulse rounded-2xl border border-border/65 bg-card/40" />
     </section>
   )
 }
@@ -173,8 +173,8 @@ function ChartGridSkeleton() {
 function ListSkeleton() {
   return (
     <section className="grid gap-4 xl:grid-cols-2">
-      <div className="h-96 animate-pulse rounded-2xl border border-border/50 bg-card/40" />
-      <div className="h-96 animate-pulse rounded-2xl border border-border/50 bg-card/40" />
+      <div className="h-96 animate-pulse rounded-2xl border border-border/65 bg-card/40" />
+      <div className="h-96 animate-pulse rounded-2xl border border-border/65 bg-card/40" />
     </section>
   )
 }

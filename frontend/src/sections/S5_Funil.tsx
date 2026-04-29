@@ -63,7 +63,7 @@ export default function S5_Funil({ store, year, month }: Props) {
 
   const steps = data.steps ?? []
   if (!steps.length) return (
-    <div className="bg-card/40 border border-border/50 rounded-xl p-5 text-center text-sm text-muted-foreground">
+    <div className="bg-card/40 border border-border/65 rounded-xl p-5 text-center text-sm text-muted-foreground">
       Sem dados de funil para o período selecionado.
     </div>
   )
@@ -120,15 +120,15 @@ export default function S5_Funil({ store, year, month }: Props) {
   })).sort((a, b) => b.sessions - a.sessions)
 
   return (
-    <section className="bg-card/40 border border-border/50 rounded-xl p-5">
-      <h3 className="text-sm font-semibold text-foreground mb-4 pb-2 border-b border-border/40">
+    <section className="bg-card/40 border border-border/65 rounded-xl p-5">
+      <h3 className="text-sm font-semibold text-foreground mb-4 pb-2 border-b border-border/55">
         Funil de Conversão
       </h3>
       {data.warning && (
         <p className="text-xs text-amber-400 mb-3">{data.warning}</p>
       )}
       <FunnelChart stages={funnelStages} channels={globalChannels} height={400} />
-      <div className="mt-4 grid grid-cols-3 gap-4 pt-3 border-t border-border/30">
+      <div className="mt-4 grid grid-cols-3 gap-4 pt-3 border-t border-border/45">
         <div className="text-center">
           <p className="text-xs text-muted-foreground">Conversão</p>
           <p className="text-sm font-semibold text-foreground">{(data.conversion * 100).toFixed(2)}%</p>
@@ -144,13 +144,13 @@ export default function S5_Funil({ store, year, month }: Props) {
       </div>
 
       {channelRows.length > 0 && (
-        <div className="mt-5 pt-4 border-t border-border/30">
+        <div className="mt-5 pt-4 border-t border-border/45">
           <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
             Breakdown por Canal
           </h4>
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-xs text-muted-foreground border-b border-border/30">
+              <tr className="text-xs text-muted-foreground border-b border-border/45">
                 <th className="text-left pb-2 font-medium">Canal</th>
                 <th className="text-right pb-2 font-medium">Sessões</th>
                 <th className="text-right pb-2 font-medium">%</th>
@@ -159,7 +159,7 @@ export default function S5_Funil({ store, year, month }: Props) {
             </thead>
             <tbody>
               {channelRows.map(row => (
-                <tr key={row.label} className="border-b border-border/20 last:border-0">
+                <tr key={row.label} className="border-b border-border/35 last:border-0">
                   <td className="py-2 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full shrink-0" style={{ background: row.color }} />
                     <span className="text-foreground/90">{row.label}</span>
@@ -175,7 +175,7 @@ export default function S5_Funil({ store, year, month }: Props) {
                   </td>
                 </tr>
               ))}
-              <tr className="text-xs text-muted-foreground font-semibold border-t border-border/40">
+              <tr className="text-xs text-muted-foreground font-semibold border-t border-border/55">
                 <td className="pt-2">Total</td>
                 <td className="pt-2 text-right tabular-nums">{sessionsTotal.toLocaleString('pt-BR')}</td>
                 <td className="pt-2 text-right">100%</td>
@@ -191,8 +191,8 @@ export default function S5_Funil({ store, year, month }: Props) {
 
 function FunnelLoadingState() {
   return (
-    <section className="rounded-xl border border-border/50 bg-card/40 p-5">
-      <h3 className="border-b border-border/40 pb-2 text-sm font-semibold text-foreground">
+    <section className="rounded-xl border border-border/65 bg-card/40 p-5">
+      <h3 className="border-b border-border/55 pb-2 text-sm font-semibold text-foreground">
         Funil de Conversão
       </h3>
       <div className="flex h-[420px] flex-col items-center justify-center gap-3">

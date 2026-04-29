@@ -46,8 +46,8 @@ function BrandPanel({ stores, title, year, month }: BrandPanelProps) {
 
   const accent = title === 'Brew' ? '#38bdf8' : '#34d399'
   return (
-    <div className="bg-card/40 border border-border/50 rounded-xl p-5">
-      <h3 className="text-base font-bold text-foreground mb-4 pb-2 border-b border-border/40 flex items-center gap-2">
+    <div className="bg-card/40 border border-border/65 rounded-xl p-5">
+      <h3 className="text-base font-bold text-foreground mb-4 pb-2 border-b border-border/55 flex items-center gap-2">
         <span className="w-1 h-5 rounded-full shrink-0" style={{ background: accent }} />
         {title}
       </h3>
@@ -59,7 +59,7 @@ function BrandPanel({ stores, title, year, month }: BrandPanelProps) {
         <div className="flex-1 min-w-0">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-xs text-muted-foreground border-b border-border/30">
+              <tr className="text-xs text-muted-foreground border-b border-border/45">
                 <th className="text-left py-1 font-medium">Canal</th>
                 <th className="text-right py-1 font-medium">Faturamento</th>
                 <th className="text-right py-1 font-medium">Pedidos</th>
@@ -68,7 +68,7 @@ function BrandPanel({ stores, title, year, month }: BrandPanelProps) {
             </thead>
             <tbody>
               {rows.map(r => (
-                <tr key={r.key} className="border-b border-border/20 hover:bg-accent/30">
+                <tr key={r.key} className="border-b border-border/35 hover:bg-accent/30">
                   <td className="py-1.5 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full shrink-0" style={{ background: r.color }} />
                     {r.label}
@@ -78,7 +78,7 @@ function BrandPanel({ stores, title, year, month }: BrandPanelProps) {
                   <td className="py-1.5 text-right text-muted-foreground">{r.ticket != null ? formatBRL(r.ticket) : '—'}</td>
                 </tr>
               ))}
-              <tr className="font-semibold text-foreground border-t border-border/50">
+              <tr className="font-semibold text-foreground border-t border-border/65">
                 <td className="py-2">Total</td>
                 <td className="py-2 text-right">{formatBRL(totRev)}</td>
                 <td className="py-2 text-right">{totOrd}</td>

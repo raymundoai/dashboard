@@ -218,7 +218,7 @@ export default function FunnelChart({ stages, channels, height = 380 }: Props) {
       )}
 
       {/* Legend */}
-      <div className="flex gap-3 flex-wrap mt-3 pt-3 border-t border-border/60">
+      <div className="flex gap-3 flex-wrap mt-3 pt-3 border-t border-border/75">
         {legendChannels.map(ch => (
           <div key={ch.label} className="flex items-center gap-2 px-2.5 py-1 rounded-lg"
             style={{ background: ch.color + '18', border: `1px solid ${ch.color}40` }}>
