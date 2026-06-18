@@ -41,6 +41,40 @@ class MonthlyPayload(BaseModel):
         return v
 
 
+class MonthlyImportRow(BaseModel):
+    store_code: str
+    year: int
+    month: int
+    target_revenue: Optional[float] = None
+    realized_revenue: Optional[float] = None
+    source_file: Optional[str] = None
+
+    @field_validator("store_code")
+    @classmethod
+    def validate_store_code(cls, v: str) -> str:
+        if v not in _VALID_STORES:
+            raise ValueError("unknown store_code")
+        return v
+
+    @field_validator("year")
+    @classmethod
+    def validate_year(cls, v: int) -> int:
+        if not (2020 <= v <= 2030):
+            raise ValueError("year must be between 2020 and 2030")
+        return v
+
+    @field_validator("month")
+    @classmethod
+    def validate_month(cls, v: int) -> int:
+        if not (1 <= v <= 12):
+            raise ValueError("month must be between 1 and 12")
+        return v
+
+
+class MonthlyImportPayload(BaseModel):
+    rows: list[MonthlyImportRow]
+
+
 def _db() -> sqlite3.Connection:
     tiny_bi.ensure_database()
     return tiny_bi._db_connect()
@@ -128,5 +162,41 @@ async def post_monthly(
 
         conn.commit()
         return {"ok": True}
+    finally:
+        conn.close()
+
+
+@router.post("/admin/monthly/import")
+async def import_monthly_rows(
+    payload: MonthlyImportPayload,
+    _: str = Depends(require_admin),
+):
+    conn = _db()
+    try:
+        imported = 0
+        for row in payload.rows:
+            conn.execute(
+                """
+                INSERT INTO revenue_targets_monthly
+                    (store_code, year, month, target_revenue, realized_revenue, source_file)
+                VALUES (?, ?, ?, ?, ?, ?)
+                ON CONFLICT(store_code, year, month) DO UPDATE SET
+                    target_revenue = excluded.target_revenue,
+                    realized_revenue = excluded.realized_revenue,
+                    source_file = excluded.source_file
+                """,
+                (
+                    row.store_code,
+                    row.year,
+                    row.month,
+                    row.target_revenue,
+                    row.realized_revenue,
+                    row.source_file,
+                ),
+            )
+            imported += 1
+
+        conn.commit()
+        return {"ok": True, "imported": imported}
     finally:
         conn.close()

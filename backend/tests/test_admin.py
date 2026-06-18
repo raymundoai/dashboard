@@ -93,11 +93,43 @@ def test_post_monthly_unknown_store_ignored(admin_client):
     assert r.status_code == 200
 
 
+def test_import_monthly_rows_upserts_target_and_realized(admin_client):
+    payload = {
+        "rows": [
+            {
+                "store_code": "brew",
+                "year": 2025,
+                "month": 5,
+                "target_revenue": 123000.0,
+                "realized_revenue": 118500.5,
+                "source_file": "manual-import",
+            }
+        ]
+    }
+    r = admin_client.post("/api/admin/monthly/import", json=payload)
+    assert r.status_code == 200
+    assert r.json() == {"ok": True, "imported": 1}
+
+    r2 = admin_client.get("/api/data?source=brew&startYear=2025&endYear=2025")
+    year = r2.json()["years"][0]
+    assert year["meta"][4] == 123000.0
+    assert year["realizado"][4] == 118500.5
+
+
+def test_import_monthly_rows_rejects_unknown_store(admin_client):
+    r = admin_client.post("/api/admin/monthly/import", json={
+        "rows": [{"store_code": "missing", "year": 2025, "month": 5}]
+    })
+    assert r.status_code == 422
+
+
 def test_viewer_cannot_access_admin_routes(viewer_client):
     r = viewer_client.get("/api/admin/monthly?year=2026&month=3")
     assert r.status_code == 403
     r2 = viewer_client.post("/api/admin/monthly", json={"year": 2026, "month": 3, "stores": {}})
     assert r2.status_code == 403
+    r3 = viewer_client.post("/api/admin/monthly/import", json={"rows": []})
+    assert r3.status_code == 403
 
 
 def test_unauthenticated_cannot_access_admin_routes(client):
