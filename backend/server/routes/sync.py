@@ -3,6 +3,7 @@ import threading, uuid
 from datetime import date, datetime, timezone
 from fastapi import APIRouter, Depends, Query
 from server.deps import require_auth
+from server.sync_runner import is_tiny_sync_running, run_tiny_sync
 import tiny_bi
 
 router = APIRouter()
@@ -44,17 +45,22 @@ def _run_sync_mode(
     years: str | None,
 ) -> dict:
     if mode == "incremental":
-        return tiny_bi.sync_incremental(source=source, lookback_days=lookback_days)
+        return run_tiny_sync(source=source, mode=mode, lookback_days=lookback_days)
 
     if mode == "range":
         if not start or not end:
             raise ValueError("mode=range requires start and end query params in YYYY-MM-DD format")
-        return tiny_bi.sync_date_range(source, date.fromisoformat(start), date.fromisoformat(end))
+        return run_tiny_sync(
+            source=source,
+            mode=mode,
+            start=date.fromisoformat(start),
+            end=date.fromisoformat(end),
+        )
 
     if mode == "backfill":
         if not years:
             raise ValueError("mode=backfill requires years query param, e.g. years=2024-2026")
-        return tiny_bi.backfill_years(source, _parse_years(years))
+        return run_tiny_sync(source=source, mode=mode, years=_parse_years(years))
 
     raise ValueError("Invalid sync mode. Use incremental, range, or backfill.")
 
@@ -101,4 +107,4 @@ async def trigger_sync(
 async def sync_status(job_id: str | None = Query(None), _: str = Depends(require_auth)):
     if job_id:
         return _SYNC_JOBS.get(job_id, {"status": "not_found"})
-    return {"jobs": list(_SYNC_JOBS.values())[-5:]}
+    return {"jobs": list(_SYNC_JOBS.values())[-5:], "sync_running": is_tiny_sync_running()}

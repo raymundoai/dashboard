@@ -10,6 +10,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from server.routes import data, products, customers, funnel, sync, management, kpis, ga4, admin, operational
 from server.auth import router as auth_router
+from server.daily_sync import DailySyncScheduler
 import tiny_bi
 
 @asynccontextmanager
@@ -18,7 +19,12 @@ async def lifespan(app: FastAPI):
     if os.getenv("AUTH_SECRET", "change-me") == "change-me":
         warnings.warn("AUTH_SECRET is not set — using insecure default", stacklevel=1)
     tiny_bi.ensure_database()
-    yield
+    scheduler = DailySyncScheduler()
+    scheduler.start()
+    try:
+        yield
+    finally:
+        await scheduler.stop()
 
 app = FastAPI(title="Dash Final API", lifespan=lifespan)
 

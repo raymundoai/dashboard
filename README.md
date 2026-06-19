@@ -80,6 +80,36 @@ Variáveis recomendadas para sincronização:
 - `TINY_EXCLUDED_SITUACOES=cancelado,em aberto`
 - `TINY_EXCLUDED_REVENUE_MARKERS=racao,ração`
 
+### Sincronização diária
+
+O backend pode rodar uma rotina diária dentro do próprio serviço da API. Para
+revisitar todos os pedidos de 2026 todas as noites, configure:
+
+```env
+DAILY_SYNC_ENABLED=true
+DAILY_SYNC_TIME=05:00
+DAILY_SYNC_TIMEZONE=America/Sao_Paulo
+DAILY_SYNC_SOURCE=all
+DAILY_SYNC_MODE=range
+DAILY_SYNC_START_DATE=2026-01-01
+DAILY_SYNC_RUN_ON_START=false
+DAILY_SYNC_GA4_ENABLED=true
+```
+
+Nesse modo, a rotina roda diariamente de `2026-01-01` até o dia atual. Isso é
+mais pesado do que o incremental, mas captura pedidos antigos editados em 2026.
+
+Se preferir uma janela móvel, troque para:
+
+```env
+DAILY_SYNC_MODE=incremental
+DAILY_SYNC_LOOKBACK_DAYS=180
+```
+
+O botão manual de sincronização do painel usa o mesmo bloqueio interno da rotina
+diária. Se uma sincronização já estiver em andamento, a segunda execução falha
+em vez de disputar o mesmo banco/API ao mesmo tempo.
+
 Após mover o serviço no Easypanel, confira especialmente:
 
 1. O volume persistente continua montado em `/app/db`.
